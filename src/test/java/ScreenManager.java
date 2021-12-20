@@ -1,3 +1,6 @@
+import ScreenObjects.HomeScreen;
+import ScreenObjects.LoginScreen;
+import ScreenObjects.MobileBaseScreen;
 import io.appium.java_client.AppiumDriver;
 
 public class ScreenManager extends MobileBaseScreen {

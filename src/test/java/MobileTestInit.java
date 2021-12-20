@@ -25,8 +25,8 @@ public class MobileTestInit {
     //    Apps
     String driversAndroidApp = getJsonValues(configJson, "androidApp");
     String driversIOSApp = getJsonValues(configJson, "iOSApp");
-    String username = getJsonValues(configJson, "username");
-    String apiKey = getJsonValues(configJson, "apiKey");
+    String BROWSERSTACK_USERNAME = getJsonValues(configJson, "BROWSERSTACK_USERNAME");
+    String BROWSERSTACK_ACCESS_KEY = getJsonValues(configJson, "BROWSERSTACK_ACCESS_KEY");
 
 
     public String getJsonAsString(String location){
@@ -40,6 +40,10 @@ public class MobileTestInit {
     }
 
     public String getJsonValues(String stringifyJson, String key){
+        if (System.getenv(key) != null){
+            return System.getenv("BROWSERSTACK_ACCESS_KEY");
+        }
+
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = null;
         try {
@@ -84,7 +88,7 @@ public class MobileTestInit {
     }
 
     public boolean isBrowserStackRun(){
-        return System.getProperty("browserstack") != null ? System.getProperty("browserstack").contains("true") : false;
+        return System.getenv("browserstack") != null ? System.getenv("browserstack").contains("true") : false;
     }
 
     public void setupBrowserstackForAndroid() {
@@ -92,8 +96,8 @@ public class MobileTestInit {
         DesiredCapabilities caps = new DesiredCapabilities();
 
         // Set your access credentials
-        caps.setCapability("browserstack.user", username);
-        caps.setCapability("browserstack.key", apiKey);
+        caps.setCapability("browserstack.user", BROWSERSTACK_USERNAME);
+        caps.setCapability("browserstack.key", BROWSERSTACK_ACCESS_KEY);
 
         // Set URL of the application under test
         caps.setCapability("app", driversAndroidApp);
@@ -122,8 +126,8 @@ public class MobileTestInit {
         DesiredCapabilities caps = new DesiredCapabilities();
 
         // Set your access credentials
-        caps.setCapability("browserstack.user", username);
-        caps.setCapability("browserstack.key", apiKey);
+        caps.setCapability("browserstack.user", BROWSERSTACK_USERNAME);
+        caps.setCapability("browserstack.key", BROWSERSTACK_ACCESS_KEY);
 
         // Set URL of the application under test
         caps.setCapability("app", driversIOSApp);
@@ -152,16 +156,16 @@ public class MobileTestInit {
     }
 
     public boolean isAndroidRun() {
-        if (System.getProperty("platform") != null){
-            return System.getProperty("platform").toLowerCase().contains("android");
+        if (System.getenv("platform") != null){
+            return System.getenv("platform").toLowerCase().contains("android");
         }else {
             return false;
         }
     }
 
     public boolean isIOSRun() {
-        if (System.getProperty("platform") != null){
-            return System.getProperty("platform").toLowerCase().contains("ios");
+        if (System.getenv("platform") != null){
+            return System.getenv("platform").toLowerCase().contains("ios");
         }else {
             return false;
         }

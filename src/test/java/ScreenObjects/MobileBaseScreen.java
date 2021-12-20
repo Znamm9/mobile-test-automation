@@ -1,10 +1,12 @@
+package ScreenObjects;
+
 import io.appium.java_client.AppiumDriver;
 
 public class MobileBaseScreen {
 
-    AppiumDriver driver;
+    public AppiumDriver driver;
 
-    MobileBaseScreen(AppiumDriver driver){
+    public MobileBaseScreen(AppiumDriver driver){
         this.driver = driver;
     }
 }
